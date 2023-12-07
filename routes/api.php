@@ -1,12 +1,6 @@
 <?php
 
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\TeamController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,19 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+Route::prefix('v1/product')->group(function () {
+    Route::get('list', [ProductController::class,'list']);
+    Route::delete('delete/{product}', [ProductController::class,'destroy']);
+    Route::post('update/{product}', [ProductController::class,'update']);
 });
-
-Route::resource('company', CompanyController::class);
-Route::resource('department', DepartmentController::class);
-Route::resource('team', TeamController::class);
-Route::resource('employee', EmployeeController::class);
-
-Route::post('/attendance', [AttendanceController::class,'attendance']);
-
-
-Route::post('/swap', [DashboardController::class,'swap']);
-Route::post('/delete', [DashboardController::class,'delete']);
-
 
